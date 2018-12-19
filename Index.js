@@ -37,11 +37,19 @@ bot.on('message', message => {
         //Makes bot send help message to show users the commands.
         message.channel.send(
                         "Here is a list of my commands: \n" + 
-                        "-genre     ---- Recommends a random music genre to listen to. \n" +
-                        "-help  ---- Shows all the commands. \n" +
-                        "-ping   ---- Bot replys Pong! \n" +
+                        "-cat     ---- Posts a random cat picture from random.cat. \n"  +
+                        "-genre   ---- Recommends a random music genre to listen to. \n" +
+                        "-help    ---- Shows all the commands. \n" +
+                        "-ping    ---- Bot replys Pong! \n" +
                         "-roll    ---- Rolls a number between 1 and 100. \n" 
                         );
+    }
+    
+    //--------CAT-------------
+    if (msg === prefix + 'CAT') {
+        //Posts a random cat picture from random.cat.                   //This number has to be changed by hand until a solution is done
+        var picNumber = Math.floor((Math.random() * 1678));             //Generates a random number based on how many cat pictures (0-1677) -> Math.random() * 1678). 
+        message.channel.send('http://random.cat/view?i='+ picNumber);   //Sends message with the url + picture number that generates the full url.
     }
     
     //--------GENRE-----------
@@ -49,10 +57,9 @@ bot.on('message', message => {
         //Posts a random genre recommendation.
         
         //Creating random number variable and genre array
-        var genreNumber;
         var genre = ["Blues", "Classical", "Country", "Folk", "Jazz", "Newage", "Reggae", "Rock"];
         //Calculating random number based on array size.
-        genreNumber = Math.floor((Math.random() * genre.length));
+        var genreNumber = Math.floor((Math.random() * genre.length));
         //Posts the genre recommendation.
         message.reply(genre[genreNumber]);  
     }
