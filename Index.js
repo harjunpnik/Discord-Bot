@@ -42,7 +42,8 @@ bot.on('message', message => {
                         "-help    ---- Shows all the commands. \n" +
                         "-info    ---- Information of bot. \n" +
                         "-ping    ---- Bot replys Pong! \n" +
-                        "-roll    ---- Rolls a number between 1 and 100. \n" 
+                        "-roll    ---- Rolls a number between 1 and 100. \n" +
+                        "-8ball \[Question\]    ---- Ask the magical 8ball a question and your question shall be answered. \n"  
                         );
     }
     
@@ -69,9 +70,23 @@ bot.on('message', message => {
     if (msg === prefix + 'INFO') {
         //Makes bot send info message to show author, version, creation date and last updated date.
         message.channel.send("Author of bot: Nickster \n" +
-                                    "Version: 0.6.1 \n" +
+                                    "Version: 0.7.0 \n" +
                                     "Created: 18.12.2018 \n" +
                                     "Updated: 20.12.2018");
+    }
+
+    //--------MAGIC 8 BALL----
+    if (msg.substring(0,6) === prefix + '8BALL' && msg.length >= 7){
+        //Magic 8 ball will anwser randomly your question.
+        //Creating variables and response array.
+        var response = ["It is certain", "As I see it, yes", "Reply hazy try again", "Don't count on it", "It is decidedly so", "Most likely", "Ask again later", "My reply is no", "Without a doubt", "Outlook good" ," Better not tell you now", "My sources say no", "Yes definitely", "Yes", "Cannot predict now", "Outlook not so good", "You may rely on it" ," Signs point to yes" , "Concentrate and ask again", "Very doubtful"];
+        var ballNumber = Math.floor((Math.random() * response.length)); //Calculating random number based on array size.
+        message.reply(response[ballNumber]);//Posts the response 
+         
+    }
+    //If input has no question, give user feedback on how to use command
+    else if(msg.substring(0,6) === prefix + '8BALL' && msg.length <= 7){
+        message.reply("You didn't ask a question, please try again with the format \n" + ".8ball \[Your question\]") //Remind user how to use command
     }
     
      //-------PING------------
