@@ -37,9 +37,10 @@ bot.on('message', message => {
         //Makes bot send help message to show users the commands.
         message.channel.send(
                         "Here is a list of my commands: \n" + 
-                        "-cat     ---- Posts a random cat picture from random.cat. \n"  +
-                        "-genre   ---- Recommends a random music genre to listen to. \n" +
+                        "-cat    ---- Posts a random cat picture from random.cat. \n"  +
+                        "-genre    ---- Recommends a random music genre to listen to. \n" +
                         "-help    ---- Shows all the commands. \n" +
+                        "-info    ---- Information of bot. \n" +
                         "-ping    ---- Bot replys Pong! \n" +
                         "-roll    ---- Rolls a number between 1 and 100. \n" 
                         );
@@ -62,6 +63,15 @@ bot.on('message', message => {
         var genreNumber = Math.floor((Math.random() * genre.length));
         //Posts the genre recommendation.
         message.reply(genre[genreNumber]);  
+    }
+
+    //--------INFO------------
+    if (msg === prefix + 'INFO') {
+        //Makes bot send info message to show author, version, creation date and last updated date.
+        message.channel.send("Author of bot: Nickster \n" +
+                                    "Version: 0.6.1 \n" +
+                                    "Created: 18.12.2018 \n" +
+                                    "Updated: 20.12.2018");
     }
     
      //-------PING------------
