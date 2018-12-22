@@ -2,13 +2,23 @@
   "name": "discordbot",
   "version": "1.0.0",
   "description": "Simple DiscordBot",
-  "main": "index.js",
+  "main": "Index.js",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "opusscript": "^0.0.6"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harjunpnik/Discord-Bot.git"
+  },
   "author": "Niklas",
   "license": "ISC",
-  "dependencies": {
-    "discord.js": "^11.4.2"
-  }
+  "bugs": {
+    "url": "https://github.com/harjunpnik/Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/harjunpnik/Discord-Bot#readme"
 }
