@@ -4,6 +4,9 @@ const Discord = require('discord.js');
 //Sets your client, named to : bot.
 const bot = new Discord.Client();
 
+//Variable for checking if the bot is ready to play music.
+var isReady = true;
+
 //Prefix to messages so the bot will understand to execute the code.
 const prefix = '-';
 
@@ -38,6 +41,7 @@ bot.on('message', message => {
         message.channel.send(
                         "Here is a list of my commands: \n" + 
                         "-cat    ---- Posts a random cat picture from random.cat. \n"  +
+                        "-fail     ---- Plays a fail trumpet sound. \n" +
                         "-genre    ---- Recommends a random music genre to listen to. \n" +
                         "-help    ---- Shows all the commands. \n" +
                         "-info    ---- Information of bot. \n" +
@@ -52,6 +56,29 @@ bot.on('message', message => {
         //Posts a random cat picture from random.cat.                   //This number has to be changed by hand until a solution is done
         var picNumber = Math.floor((Math.random() * 1678));             //Generates a random number based on how many cat pictures (0-1677) -> Math.random() * 1678). 
         message.channel.send('http://random.cat/view?i='+ picNumber);   //Sends message with the url + picture number that generates the full url.
+    }
+
+    //--------FAIL------------
+    //This command will activate if bot isReady to play music
+    if (isReady && msg === prefix + 'FAIL') {
+        //Bot joins a channel to play a fail trumpet sound.
+        
+        //This checks if the sender of the message is not a voicechat.
+        if(!message.member.voiceChannel){
+            message.channel.send('You need to be in a voicechat.');  //Remind user that they need to be in a voicechat to use this command.
+            return;
+        }
+        
+        message.channel.send("Playing: Fail trumpet");  //Sends message what bot is playing.
+        isReady = false;                                //Sets bots variable to false so that no other music commmand can be played at the same time. 
+        var voiceChannel = message.member.voiceChannel; //Saves what voice channel to join.
+        voiceChannel.join().then(connection =>{         //Joins voice channel and then:
+            const dispatcher = connection.playFile('./sound/fail.mp3'); //Plays sound file from folder.
+            dispatcher.on("end", end => {               //When Music ends it executes following:
+                voiceChannel.leave();                   //Leaves the voice channel and
+                isReady = true;                         //sets isReady to True.
+            });
+        }).catch(err => console.log(err));              //consolelogs errors.
     }
     
     //--------GENRE-----------
@@ -70,7 +97,7 @@ bot.on('message', message => {
     if (msg === prefix + 'INFO') {
         //Makes bot send info message to show author, version, creation date and last updated date.
         message.channel.send("Author of bot: Nickster \n" +
-                                    "Version: 0.7.0 \n" +
+                                    "Version: 0.8.0 \n" +
                                     "Created: 18.12.2018 \n" +
                                     "Updated: 20.12.2018");
     }
