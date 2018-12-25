@@ -1,4 +1,4 @@
 @echo off
-echo Download discord.js and opusscript
+echo Download discord.js, opusscript and YTDL (Youtube download Core)
 pause
-npm install discord.js -save opusscript
+npm install discord.js -save opusscript ytdl
