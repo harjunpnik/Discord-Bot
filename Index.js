@@ -50,6 +50,7 @@ bot.on('message', message => {
                         "-ping    ---- Bot replys Pong! \n" +
                         "-play \[link\]   ---- Plays a youtube videos audio. \n" + 
                         "-roll    ---- Rolls a number between 1 and 100. \n" +
+                        "-stop    ---- Stops the audio from playing. \n" +
                         "-8ball \[Question\]    ---- Ask the magical 8ball a question and your question shall be answered. \n"  
                         );
     }
@@ -100,7 +101,7 @@ bot.on('message', message => {
     if (msg === prefix + 'INFO') {
         //Makes bot send info message to show author, version, creation date and last updated date.
         message.channel.send("Author of bot: Nickster \n" +
-                                    "Version: 1.0.0 \n" +
+                                    "Version: 1.0.1 \n" +
                                     "Created: 18.12.2018 \n" +
                                     "Updated: 25.12.2018");
     }
@@ -156,6 +157,22 @@ bot.on('message', message => {
         message.reply(Math.floor((Math.random() * 100) + 1));
     }
     
+    //--------STOP------------
+    if (!isReady && msg === prefix + 'STOP') {
+        //Makes bot stop the music.
+        
+        //Makes bot rejoin without music and ends instantly making the bot leave.
+        var voiceChannel = message.member.voiceChannel;
+        voiceChannel.join().then(connection =>{
+            const dispatcher = connection.playFile('');
+            dispatcher.on("end", end => {
+                voiceChannel.leave();
+                isReady = true;
+            });
+        }).catch(err => console.log(err));
+    }
+    
+
 });
 
 //Your bot token for the bot so that it can connect to the server.
