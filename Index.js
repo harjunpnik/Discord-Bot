@@ -1,5 +1,6 @@
-//Loads libraries: discord.js 
+//Loads libraries: discord.js and youtube download core
 const Discord = require('discord.js');
+const YTDL = require('ytdl-core');
 
 //Sets your client, named to : bot.
 const bot = new Discord.Client();
@@ -22,7 +23,8 @@ bot.on('ready', () => {
 //This will run each time a messages is written to the chat.
 bot.on('message', message => {
 
-    //Creating variables
+    //Creating variableslet 
+    let url = message.content;                                      //Variable that stores the message so that the url can be used to play music.
     let msg = message.content.toUpperCase();                    // This variable takes the message, and turns it all into uppercase so it isn't case sensitive.
     let cont = message.content.slice(prefix.length).split(" "); // This variable slices off the prefix, then puts the rest in an array based off the spaces.
 
@@ -46,6 +48,7 @@ bot.on('message', message => {
                         "-help    ---- Shows all the commands. \n" +
                         "-info    ---- Information of bot. \n" +
                         "-ping    ---- Bot replys Pong! \n" +
+                        "-play \[link\]   ---- Plays a youtube videos audio. \n" + 
                         "-roll    ---- Rolls a number between 1 and 100. \n" +
                         "-8ball \[Question\]    ---- Ask the magical 8ball a question and your question shall be answered. \n"  
                         );
@@ -97,9 +100,9 @@ bot.on('message', message => {
     if (msg === prefix + 'INFO') {
         //Makes bot send info message to show author, version, creation date and last updated date.
         message.channel.send("Author of bot: Nickster \n" +
-                                    "Version: 0.8.0 \n" +
+                                    "Version: 1.0.0 \n" +
                                     "Created: 18.12.2018 \n" +
-                                    "Updated: 20.12.2018");
+                                    "Updated: 25.12.2018");
     }
 
     //--------MAGIC 8 BALL----
@@ -121,6 +124,31 @@ bot.on('message', message => {
         //Simple commmand that will post a message back, "Pong!" in this case.
         message.channel.send('Pong!');
     }
+
+    //--------PLAY------------
+    //This command will activate if bot isReady to play music
+    if (isReady && msg.startsWith(prefix + 'PLAY')) {
+        //Bot joins a channel to play the youtube url sound.
+        
+        //This checks if the sender of the message is not a chat.
+        if(!message.member.voiceChannel){
+            message.channel.send('You need to be in a chat.');  //Remind user that they need to be in a voicechat to use this command.
+            return;
+        }
+        message.channel.send("Playing");
+        var video;                                      //Creates variable video.
+        video = url.substring(5, msg.length+1);         //Cuts the message so that the url is left.
+        isReady = false;                                //Sets bots variable to false so that no other music commmand can be played at the same time. 
+        var voiceChannel = message.member.voiceChannel; //Saves what voice channel to join.
+        voiceChannel.join().then(connection =>{         //Joins voice channel and then:
+            const dispatcher = connection.playStream(YTDL(video, {filter: "audioonly"}));   //Plays sound from youtube video.
+            dispatcher.on("end", end => {               //When Music ends it executes following:
+                voiceChannel.leave();                   //Leaves the voice channel and
+                isReady = true;                         //sets isReady to True.
+            });
+        }).catch(err => console.log(err));              //consolelogs errors.
+    }
+    
     
     //--------ROLL------------
     if (msg === prefix + 'ROLL'){
