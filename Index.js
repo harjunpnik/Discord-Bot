@@ -34,25 +34,30 @@ bot.on('message', message => {
     //This function checks if the message has a prefix in the beginning, if not it returns.*-
     if(message.content.indexOf(prefix) !== 0) return;
     
-    
+
     //--------COMMANDS--------
     
     //--------HELP------------
     if(msg === prefix + 'HELP'){
         //Makes bot send help message to show users the commands.
-        message.channel.send(
-                        "Here is a list of my commands: \n" + 
-                        "-cat    ---- Posts a random cat picture from random.cat. \n"  +
-                        "-fail     ---- Plays a fail trumpet sound. \n" +
-                        "-genre    ---- Recommends a random music genre to listen to. \n" +
-                        "-help    ---- Shows all the commands. \n" +
-                        "-info    ---- Information of bot. \n" +
-                        "-ping    ---- Bot replys Pong! \n" +
-                        "-play \[link\]   ---- Plays a youtube videos audio. \n" + 
-                        "-roll    ---- Rolls a number between 1 and 100. \n" +
-                        "-stop    ---- Stops the audio from playing. \n" +
-                        "-8ball \[Question\]    ---- Ask the magical 8ball a question and your question shall be answered. \n"  
-                        );
+        const embed = new Discord.RichEmbed()
+                        .setAuthor(bot.user.username + " commands", bot.user.displayAvatarURL)
+                        .setThumbnail(bot.user.displayAvatarURL)
+                        .setTitle("COMMANDS:")
+                        .addField("-cat","Posts a random cat picture from random.cat.")
+                        .addField("-fail","Plays a fail trumpet sound.")
+                        .addField("-genre","Recommends a random music genre to listen to.")
+                        .addField("-help","Shows all the commands.")
+                        .addField("-info","Information of bot.")
+                        .addField("-ping","Bot replys Pong!")
+                        .addField("-play \[link\]","Plays a youtube videos audio.")
+                        .addField("-roll","Rolls a number between 1 and 100.")
+                        .addField("-stop","Stops the audio from playing")
+                        .addField("-8ball \[Question\]","Ask the magical 8ball a question and your question shall be answered.")
+                        .addField("For more information and updates:","https://github.com/harjunpnik/Discord-Bot")
+                        .setFooter("Author: Niklas | https://github.com/harjunpnik/Discord-Bot");
+    
+            message.channel.send({embed});
     }
     
     //--------CAT-------------
@@ -104,7 +109,7 @@ bot.on('message', message => {
                     .setAuthor(bot.user.username, bot.user.displayAvatarURL)
                     .setThumbnail(bot.user.displayAvatarURL)
                     .addField("Bot Name:", bot.user.username)
-                    .addField("Version:","1.0.2")
+                    .addField("Version:","1.0.3")
                     .addField("Updated:","26.12.2018")
                     .addField("Created:","18.12.2018")
                     .addField("Author:","Niklas")
