@@ -34,7 +34,7 @@ bot.on('message', message => {
     //This function checks if the message has a prefix in the beginning, if not it returns.*-
     if(message.content.indexOf(prefix) !== 0) return;
     
-
+    
     //--------COMMANDS--------
     
     //--------HELP------------
@@ -99,11 +99,18 @@ bot.on('message', message => {
 
     //--------INFO------------
     if (msg === prefix + 'INFO') {
-        //Makes bot send info message to show author, version, creation date and last updated date.
-        message.channel.send("Author of bot: Nickster \n" +
-                                    "Version: 1.0.1 \n" +
-                                    "Created: 18.12.2018 \n" +
-                                    "Updated: 25.12.2018");
+        //Makes bot send info embed to show bot name, version, update date, creation date, author and github link.
+        const embed = new Discord.RichEmbed()
+                    .setAuthor(bot.user.username, bot.user.displayAvatarURL)
+                    .setThumbnail(bot.user.displayAvatarURL)
+                    .addField("Bot Name:", bot.user.username)
+                    .addField("Version:","1.0.2")
+                    .addField("Updated:","26.12.2018")
+                    .addField("Created:","18.12.2018")
+                    .addField("Author:","Niklas")
+                    .addField("Github page:","https://github.com/harjunpnik/Discord-Bot");
+
+        message.channel.send({embed});
     }
 
     //--------MAGIC 8 BALL----
@@ -150,7 +157,6 @@ bot.on('message', message => {
         }).catch(err => console.log(err));              //consolelogs errors.
     }
     
-    
     //--------ROLL------------
     if (msg === prefix + 'ROLL'){
         //Rolls a random number between 1 and 100
@@ -172,7 +178,6 @@ bot.on('message', message => {
         }).catch(err => console.log(err));
     }
     
-
 });
 
 //Your bot token for the bot so that it can connect to the server.
