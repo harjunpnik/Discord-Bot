@@ -1,6 +1,8 @@
-//Loads libraries: discord.js and youtube download core
+//Loads libraries: discord.js, youtube download core and getJSON
 const Discord = require('discord.js');
 const YTDL = require('ytdl-core');
+const getJSON = require('get-json')
+
 
 //Sets your client, named to : bot.
 const bot = new Discord.Client();
@@ -46,14 +48,15 @@ bot.on('message', message => {
                         .setTitle("COMMANDS:")
                         .addField("-cat","Posts a random cat picture from random.cat.")
                         .addField("-fail","Plays a fail trumpet sound.")
+                        .addField("-gif \[search terms\]","Recommends a random music genre to listen to. \n Example: -gif funny cat")
                         .addField("-genre","Recommends a random music genre to listen to.")
                         .addField("-help","Shows all the commands.")
                         .addField("-info","Information of bot.")
                         .addField("-ping","Bot replys Pong!")
-                        .addField("-play \[link\]","Plays a youtube videos audio.")
+                        .addField("-play \[link\]","Plays a youtube videos audio. \n Example: -play https://www.youtube.com/watch?v=dQw4w9WgXcQ")
                         .addField("-roll","Rolls a number between 1 and 100.")
                         .addField("-stop","Stops the audio from playing")
-                        .addField("-8ball \[Question\]","Ask the magical 8ball a question and your question shall be answered.")
+                        .addField("-8ball \[Question\]","Ask the magical 8ball a question and your question shall be answered. \n Example: -8ball Is the Earth flat?")
                         .addField("For more information and updates:","https://github.com/harjunpnik/Discord-Bot")
                         .setFooter("Author: Niklas | https://github.com/harjunpnik/Discord-Bot");
     
@@ -90,6 +93,42 @@ bot.on('message', message => {
         }).catch(err => console.log(err));              //consolelogs errors.
     }
     
+    //--------GIF (GIPHY)-----------
+    if (msg.startsWith(prefix + 'GIF')){
+        //Posts a random giphy picture related to the search
+
+        var apiKey = "<Your Token goes here>"   //Enter your own giphy-api key here
+        var api = "http://api.giphy.com/v1/gifs/search?q=";
+        var searchReply;            //variable for the reply
+        var searchTerm = "";        //variable for the search terms
+        var contents = cont;        //array including every word from the message, including the command word
+
+        if(contents.length <= 1){   //checks if the message contains a search word
+            searchReply = "You need to enter search terms after -gif. Example: -gif funny cat"
+        }else{                      //if there are search terms this part is run
+            for(i = 0; i < contents.length -1 ; i++){   //for loop that outputs the search tearms so that giphy api can handle it
+                if(i <contents.length -2 ){
+                    searchTerm += contents[i+1] + "+";
+                }else{
+                    searchTerm += contents[i+1];
+                }
+            }
+
+            var apiUrl = api + searchTerm + apiKey;         //Giphy api url is combined here
+          
+            searchReply = "Search did not work";
+            getJSON(apiUrl, function(error, response){      //Get JSON data from url
+                console.log(error);
+                // undefined
+                console.log(response.data[0].url);
+                 
+                searchReply = response.data[0].url;         //Sends url from first result
+                message.channel.send(searchReply);          //sends url to chat
+            });
+        
+        }   
+    }   
+
     //--------GENRE-----------
     if (msg === prefix + 'GENRE'){
         //Posts a random genre recommendation.
@@ -109,7 +148,7 @@ bot.on('message', message => {
                     .setAuthor(bot.user.username, bot.user.displayAvatarURL)
                     .setThumbnail(bot.user.displayAvatarURL)
                     .addField("Bot Name:", bot.user.username)
-                    .addField("Version:","1.0.3")
+                    .addField("Version:","1.1.0")
                     .addField("Updated:","26.12.2018")
                     .addField("Created:","18.12.2018")
                     .addField("Author:","Niklas")
