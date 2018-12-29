@@ -35,5 +35,6 @@ Some possible updates or commands to be implemented:
 * Skip song command
   * Vote skip 
   * Instant skip with certain server roles 
-* Giphy-api implementation
+* ~~Giphy-api implementation~~ [Done]
+  * Random gif and first result gif
 * Purge functionality (Deletes messages)
