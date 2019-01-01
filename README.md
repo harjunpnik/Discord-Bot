@@ -44,7 +44,7 @@ The following list includes the commands that have been implemented.
 
 | Command       | Description                                                          | Example        									|
 | ------------- |:--------------------------------------------------------------------:| ---------------------------------------------------|
-| -cat          | Posts a random cat picture from [random.cat](random.cat "random.cat")| -cat           									|
+| -cat          | Posts a random cat picture from random.cat                           | -cat           									|
 | -fail         | Plays a fail trumpet sound                                           | -fail          									|
 | -gif          | Searches for a gif on the site Giphy                                 | -gif funny cat 									|		
 | -genre        | Recommends a random music genre to listen to                         | -genre         									|
