@@ -42,19 +42,19 @@ The easiest way to find all the commands is tu use the ```-help``` command. This
 
 The following list includes the commands that have been implemented.
 
-| Command       | Description                                                          | Example        									|
-| ------------- |:--------------------------------------------------------------------:| ---------------------------------------------------|
-| -cat          | Posts a random cat picture from random.cat                           | -cat           									|
-| -fail         | Plays a fail trumpet sound                                           | -fail          									|
-| -gif          | Searches for a gif on the site Giphy                                 | -gif funny cat 									|		
-| -genre        | Recommends a random music genre to listen to                         | -genre         									|
-| -help         | Shows all the commands                                               | -help         							 			|
-| -info         | Shows information about the bot                                      | -info        										|
-| -ping         | Bot replys Pong!                                                     | -ping      									    |
-| -play         | Plays a youtube videos audio                                         | -play https://www.youtube.com/watch?v=dQw4w9WgXcQ  |
-| -roll         | Rolls a number between 1 and 100                                     | -roll          									|
-| -stop         | Stops the audio from playing                                         | -stop          									|
-| -8ball        | Ask the magical 8ball a question and your question shall be answered | -8ball Am I awesome?								|
+| Command       | Description                                                          					| Example        									|
+| ------------- |:-------------------------------------------------------------------------------------:|---------------------------------------------------|
+| -cat          | Posts a random cat picture from [random.cat](http://random.cat  "http://random.cat")	| -cat           									|
+| -fail         | Plays a fail trumpet sound                                           					| -fail          									|
+| -gif          | Searches for a gif on the site Giphy                                 					| -gif funny cat 									|		
+| -genre        | Recommends a random music genre to listen to                         					| -genre         									|
+| -help         | Shows all the commands                                               					| -help         						 			|
+| -info         | Shows information about the bot                                      					| -info        										|
+| -ping         | Bot replys Pong!                                                     					| -ping      									    |
+| -play         | Plays a youtube videos audio                                         					| -play https://www.youtube.com/watch?v=dQw4w9WgXcQ |
+| -roll         | Rolls a number between 1 and 100                                     					| -roll          									|
+| -stop         | Stops the audio from playing                                         					| -stop          									|
+| -8ball        | Ask the magical 8ball a question and your question shall be answered 					| -8ball Am I awesome?								|
 
 ## Possible updates
 Some possible updates or commands to be implemented:
