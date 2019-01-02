@@ -4,7 +4,8 @@ const YTDL = require('ytdl-core');
 const getJSON = require('get-json')
 
 
-//API KEYS 
+//API-Keys and Bot Token
+const botToken = '<Your Token goes here>'; //Enter your own Bot Token here
 const giphyApiKey = '<Your API-Key goes here>'   //Enter your own giphy-api key here
 
 //Sets your client, named to : bot.
@@ -122,19 +123,16 @@ bot.on('message', message => {
           
             searchReply = "Search did not work";
             getJSON(apiUrl, function(error, response){      //Get JSON data from url
-                console.log(error);
-                // undefined
-                console.log(response.data.length);
-                console.log(response.data[24].url);
-                console.log(isRandom);
+                //console.log(error);
+                //console.log(response.data.length);
+                //console.log(isRandom);
 
                 if (isRandom){
-                    var result = Math.floor(Math.random() * 25);  
+                    var result = Math.floor(Math.random() * response.data.length);  
                     searchReply = response.data[result].url;         //Sends url from first result
                 }else{
                     searchReply = response.data[0].url;         //Sends url from first result
-                }
-                 
+                }              
                 
                 message.channel.send(searchReply);          //sends url to chat
             });
@@ -251,4 +249,4 @@ bot.on('message', message => {
 });
 
 //Your bot token for the bot so that it can connect to the server.
-bot.login('<Your Token goes here>');
+bot.login(botToken);
