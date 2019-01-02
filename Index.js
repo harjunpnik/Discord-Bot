@@ -4,6 +4,9 @@ const YTDL = require('ytdl-core');
 const getJSON = require('get-json')
 
 
+//API KEYS 
+const giphyApiKey = '<Your API-Key goes here>'   //Enter your own giphy-api key here
+
 //Sets your client, named to : bot.
 const bot = new Discord.Client();
 
@@ -48,7 +51,8 @@ bot.on('message', message => {
                         .setTitle("COMMANDS:")
                         .addField("-cat","Posts a random cat picture from random.cat.")
                         .addField("-fail","Plays a fail trumpet sound.")
-                        .addField("-gif \[search terms\]","Searches for a gif on the site Giphy. \n Example: -gif funny cat")
+                        .addField("-gif \[search terms\]","Searches for the first result on the site Giphy. \n Example: -gif funny cat")
+                        .addField("-gifr \[search terms\]","Searches for a random gif on the site Giphy. \n Example: -gifr batman")
                         .addField("-genre","Recommends a random music genre to listen to.")
                         .addField("-help","Shows all the commands.")
                         .addField("-info","Shows information about the bot")
@@ -92,19 +96,19 @@ bot.on('message', message => {
             });
         }).catch(err => console.log(err));              //consolelogs errors.
     }
-    
-    //--------GIF (GIPHY)-----------
-    if (msg.startsWith(prefix + 'GIF')){
-        //Posts a random giphy picture related to the search
 
-        var apiKey = "<Your Token goes here>"   //Enter your own giphy-api key here
+    //--------GIF & GIFR (GIPHY)-----------
+    //The function for the two giphy commands
+    function giphySearch(isRandom) {
+        var fullApiKey = "&api_key=" + giphyApiKey;
         var api = "http://api.giphy.com/v1/gifs/search?q=";
         var searchReply;            //variable for the reply
         var searchTerm = "";        //variable for the search terms
         var contents = cont;        //array including every word from the message, including the command word
 
         if(contents.length <= 1){   //checks if the message contains a search word
-            searchReply = "You need to enter search terms after -gif. Example: -gif funny cat"
+            searchReply = "You need to enter search terms after -gif. Example: -gif funny cat";
+            message.channel.send(searchReply);
         }else{                      //if there are search terms this part is run
             for(i = 0; i < contents.length -1 ; i++){   //for loop that outputs the search tearms so that giphy api can handle it
                 if(i <contents.length -2 ){
@@ -114,20 +118,42 @@ bot.on('message', message => {
                 }
             }
 
-            var apiUrl = api + searchTerm + apiKey;         //Giphy api url is combined here
+            var apiUrl = api + searchTerm + fullApiKey;         //Giphy api url is combined here
           
             searchReply = "Search did not work";
             getJSON(apiUrl, function(error, response){      //Get JSON data from url
                 console.log(error);
                 // undefined
-                console.log(response.data[0].url);
+                console.log(response.data.length);
+                console.log(response.data[24].url);
+                console.log(isRandom);
+
+                if (isRandom){
+                    var result = Math.floor(Math.random() * 25);  
+                    searchReply = response.data[result].url;         //Sends url from first result
+                }else{
+                    searchReply = response.data[0].url;         //Sends url from first result
+                }
                  
-                searchReply = response.data[0].url;         //Sends url from first result
+                
                 message.channel.send(searchReply);          //sends url to chat
             });
         
-        }   
-    }   
+        }  
+    }
+
+    //--------GIF (GIPHY)-----------
+    if (msg.startsWith(prefix + 'GIF') && msg.substring(4,5) != "R" ){
+        //Posts the first match found on giphy 
+        giphySearch(false);
+    }
+    
+
+    //--------GIFR (GIPHY)-----------
+    if (msg.startsWith(prefix + 'GIFR')){
+        //Posts a random match found on giphy 
+        giphySearch(true);
+    }
 
     //--------GENRE-----------
     if (msg === prefix + 'GENRE'){
