@@ -172,8 +172,8 @@ bot.on('message', message => {
                     .setAuthor(bot.user.username, bot.user.displayAvatarURL)
                     .setThumbnail(bot.user.displayAvatarURL)
                     .addField("Bot Name:", bot.user.username)
-                    .addField("Version:","1.1.0")
-                    .addField("Updated:","26.12.2018")
+                    .addField("Version:","1.2.1")
+                    .addField("Updated:","3.1.2019")
                     .addField("Created:","18.12.2018")
                     .addField("Author:","Niklas")
                     .addField("Github page:","https://github.com/harjunpnik/Discord-Bot");

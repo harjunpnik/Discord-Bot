@@ -12,19 +12,20 @@ npm init
 npm install discord.js -save
 npm install opusscript
 npm install ytdl
+npm install get-json
 ```
+A new applicaton must be created over at [https://discordapp.com/developers/applications/me](https://discordapp.com/developers/applications/me  "https://discordapp.com/developers/applications/me") and added to the server. From the same site you can access the bots token which needs to be replaced on the following line.
 
-The bot needs to be added to the server and the 
 ```javascript
-bot.login('<Your Token goes here>')
+const botToken = '<Your Token goes here>'; //Enter your own Bot Token here
 ```
-needs to  be changed to the bots own token.
+By default, the bot has low privileges and needs to given extra privileges for certain commands to work properly. 
 
 To use the Gif command requires a giphy api key which can be requested from
 [here](https://giphy.api-docs.io/1.0/welcome/access-and-api-keys  "https://giphy.api-docs.io/1.0/welcome/access-and-api-keys"). Replace the next line with your own api key.
 
 ```javascript
-var apiKey = "<Your Token goes here>"   //Enter your own giphy-api key here
+const giphyApiKey = '<Your API-Key goes here>'   //Enter your own giphy-api key here
 ```
  
 ## Running the program
@@ -46,7 +47,8 @@ The following list includes the commands that have been implemented.
 | ------------- |:-------------------------------------------------------------------------------------:|---------------------------------------------------|
 | -cat          | Posts a random cat picture from [random.cat](http://random.cat  "http://random.cat")	| -cat           									|
 | -fail         | Plays a fail trumpet sound                                           					| -fail          									|
-| -gif          | Searches for a gif on the site Giphy                                 					| -gif funny cat 									|		
+| -gif          | Searches for the first result on the site Giphy                                		| -gif funny cat 									|
+| -gifr         | Searches for a random gif on the site Giphy                                			| -gif batman	 									|			
 | -genre        | Recommends a random music genre to listen to                         					| -genre         									|
 | -help         | Shows all the commands                                               					| -help         						 			|
 | -info         | Shows information about the bot                                      					| -info        										|
@@ -63,5 +65,5 @@ Some possible updates or commands to be implemented:
   * Vote skip 
   * Instant skip with certain server roles 
 * ~~Giphy-api implementation~~ [Done]
-  * Random gif and first result gif
+  * ~~Random gif and first result gif~~ [Done]
 * Purge functionality (Deletes messages)
