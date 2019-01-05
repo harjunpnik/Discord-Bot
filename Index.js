@@ -26,7 +26,7 @@ bot.on('ready', () => {
     //on successfull startup it writes in the console log 'I am ready!'.
     console.log('I am ready!');
     //user.setGame(""); Sets the game what bot is playing. Can be used to display usefull messages.
-    bot.user.setActivity("My prefix is: -");
+    bot.user.setActivity("My prefix is: " + prefix);
 });
 
 
@@ -54,18 +54,19 @@ bot.on('message', message => {
                         .setAuthor(bot.user.username + " commands", bot.user.displayAvatarURL)
                         .setThumbnail(bot.user.displayAvatarURL)
                         .setTitle("COMMANDS:")
-                        .addField("-cat","Posts a random cat picture from random.cat.")
-                        .addField("-fail","Plays a fail trumpet sound.")
-                        .addField("-gif \[search terms\]","Searches for the first result on the site Giphy. \n Example: -gif funny cat")
-                        .addField("-gifr \[search terms\]","Searches for a random gif on the site Giphy. \n Example: -gifr batman")
-                        .addField("-genre","Recommends a random music genre to listen to.")
-                        .addField("-help","Shows all the commands.")
-                        .addField("-info","Shows information about the bot")
-                        .addField("-ping","Bot replys Pong!")
-                        .addField("-play \[link\]","Plays a youtube videos audio. \n Example: -play https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-                        .addField("-roll","Rolls a number between 1 and 100.")
-                        .addField("-stop","Stops the audio from playing")
-                        .addField("-8ball \[Question\]","Ask the magical 8ball a question and your question shall be answered. \n Example: -8ball Is the Earth flat?")
+                        .addField(prefix + "cat","Posts a random cat picture from random.cat.")
+                        .addField(prefix + "fail","Plays a fail trumpet sound.")
+                        .addField(prefix + "gif \[search terms\]","Searches for the first result on the site Giphy. \n Example: " + prefix + "gif funny cat")
+                        .addField(prefix + "gifr \[search terms\]","Searches for a random gif on the site Giphy. \n Example: " + prefix + "gifr batman")
+                        .addField(prefix + "genre","Recommends a random music genre to listen to.")
+                        .addField(prefix + "help","Shows all the commands.")
+                        .addField(prefix + "info","Shows information about the bot")
+                        .addField(prefix + "ping","Bot replys Pong!")
+                        .addField(prefix + "play \[link\]","Plays a youtube videos audio. \n Example: " + prefix + "play https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+                        .addField(prefix + "purge \[number\]","Deletes a given amount of messages from chat to clean the chat. \n Example: " + prefix + "purge 20")
+                        .addField(prefix + "roll","Rolls a number between 1 and 100.")
+                        .addField(prefix + "stop","Stops the audio from playing")
+                        .addField(prefix + "8ball \[Question\]","Ask the magical 8ball a question and your question shall be answered. \n Example: " + prefix + "8ball Is the Earth flat?")
                         .addField("For more information and updates:","https://github.com/harjunpnik/Discord-Bot")
                         .setFooter("Author: Niklas | https://github.com/harjunpnik/Discord-Bot");
     
@@ -86,7 +87,7 @@ bot.on('message', message => {
         
         //This checks if the sender of the message is not a voicechat.
         if(!message.member.voiceChannel){
-            message.channel.send('You need to be in a voicechat.');  //Remind user that they need to be in a voicechat to use this command.
+            message.reply('You need to be in a voicechat.');  //Remind user that they need to be in a voicechat to use this command.
             return;
         }
         
@@ -112,7 +113,7 @@ bot.on('message', message => {
         var contents = cont;        //array including every word from the message, including the command word
 
         if(contents.length <= 1){   //checks if the message contains a search word
-            searchReply = "You need to enter search terms after -gif. Example: -gif funny cat";
+            searchReply = "You need to enter search terms after -gif. Example: " + prefix + "gif funny cat";
             message.channel.send(searchReply);
         }else{                      //if there are search terms this part is run
             for(i = 0; i < contents.length -1 ; i++){   //for loop that outputs the search tearms so that giphy api can handle it
@@ -176,7 +177,7 @@ bot.on('message', message => {
                     .setAuthor(bot.user.username, bot.user.displayAvatarURL)
                     .setThumbnail(bot.user.displayAvatarURL)
                     .addField("Bot Name:", bot.user.username)
-                    .addField("Version:","1.3.0")
+                    .addField("Version:","1.3.1")
                     .addField("Updated:","5.1.2019")
                     .addField("Created:","18.12.2018")
                     .addField("Author:","Niklas")
@@ -196,7 +197,7 @@ bot.on('message', message => {
     }
     //If input has no question, give user feedback on how to use command
     else if(msg.substring(0,6) === prefix + '8BALL' && msg.length <= 7){
-        message.reply("You didn't ask a question, please try again with the format \n" + ".8ball \[Your question\]") //Remind user how to use command
+        message.reply("You didn't ask a question, please try again with the format \n" + prefix + "8ball \[Your question\]") //Remind user how to use command
     }
     
      //-------PING------------
@@ -212,7 +213,7 @@ bot.on('message', message => {
         
         //This checks if the sender of the message is not a chat.
         if(!message.member.voiceChannel){
-            message.channel.send('You need to be in a chat.');  //Remind user that they need to be in a voicechat to use this command.
+            message.reply('You need to be in a chat.');  //Remind user that they need to be in a voicechat to use this command.
             return;
         }
         message.channel.send("Playing");
@@ -236,13 +237,13 @@ bot.on('message', message => {
         const amount = parseInt(cont[1]); //Takes the amount from the message
         //We want to check if the user has the right role to use this command.
         if (!message.member.roles.find("name", botAdminRole)) { //This checks to see if they don't have the role.
-            message.channel.send('You do not have the premission to use this command.');    //Reminds user that they don't have premission for that.
+        message.reply('You do not have the premission to use this command.');    //Reminds user that they don't have premission for that.
             return; 
         }
 
         // We want to check if the argument is a number
         if (isNaN(amount)) {
-            message.channel.send('Please use a number as your argument. \nUsage: ' + prefix + 'purge <number>'); // Remind user how to use command.
+            message.reply('Please use a number as your argument. \nUsage: ' + prefix + 'purge <number>'); // Remind user how to use command.
             return;
         }
 
@@ -253,8 +254,7 @@ bot.on('message', message => {
         //Deletes the messages
         message.channel.bulkDelete(fetched)
             .catch(error => message.channel.send(`Error: ${error}`)); 
-    }
-    
+    }    
 
      //-------PURGE------------
      if (msg.startsWith(prefix + 'PURGE')) { 
