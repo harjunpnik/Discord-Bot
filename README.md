@@ -27,6 +27,18 @@ To use the Gif command requires a giphy api key which can be requested from
 ```javascript
 const giphyApiKey = '<Your API-Key goes here>'   //Enter your own giphy-api key here
 ```
+
+To use the purge command the botAdminRole needs to be changed. This is so that everyone cannot delete the whole chat history. It can be changed here.
+
+```javascript
+const botAdminRole = '<Your Discord bot admin role goes here>';
+```
+
+By default the bot will run with the prefix "-". This can be changed here.
+
+```javascript
+const prefix = '-';
+```
  
 ## Running the program
 
@@ -54,6 +66,7 @@ The following list includes the commands that have been implemented.
 | -info         | Shows information about the bot                                      					| -info        										|
 | -ping         | Bot replys Pong!                                                     					| -ping      									    |
 | -play         | Plays a youtube videos audio                                         					| -play https://www.youtube.com/watch?v=dQw4w9WgXcQ |
+| -purge        | Deletes a given amount of messages from chat to clean the chat                        | -purge 20											|
 | -roll         | Rolls a number between 1 and 100                                     					| -roll          									|
 | -stop         | Stops the audio from playing                                         					| -stop          									|
 | -8ball        | Ask the magical 8ball a question and your question shall be answered 					| -8ball Am I awesome?								|
@@ -66,4 +79,4 @@ Some possible updates or commands to be implemented:
   * Instant skip with certain server roles 
 * ~~Giphy-api implementation~~ [Done]
   * ~~Random gif and first result gif~~ [Done]
-* Purge functionality (Deletes messages)
+* ~~Purge functionality (Deletes messages)~~ [Done]
