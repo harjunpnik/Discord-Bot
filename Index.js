@@ -6,7 +6,13 @@ const getJSON = require('get-json')
 
 //API-Keys and Bot Token
 const botToken = '<Your Token goes here>'; //Enter your own Bot Token here
-const giphyApiKey = '<Your API-Key goes here>'   //Enter your own giphy-api key here
+const giphyApiKey = '<Your API-Key goes here>';//Enter your own giphy-api key here
+
+//Bot admin role from the server 
+const botAdminRole = '<Your Discord bot admin role goes here>';
+
+//Prefix to messages so the bot will understand to execute the code.
+const prefix = '-';
 
 //Sets your client, named to : bot.
 const bot = new Discord.Client();
@@ -14,8 +20,6 @@ const bot = new Discord.Client();
 //Variable for checking if the bot is ready to play music.
 var isReady = true;
 
-//Prefix to messages so the bot will understand to execute the code.
-const prefix = '-';
 
 //Bot does this on start-up.
 bot.on('ready', () => {
@@ -30,7 +34,7 @@ bot.on('ready', () => {
 bot.on('message', message => {
 
     //Creating variableslet 
-    let url = message.content;                                      //Variable that stores the message so that the url can be used to play music.
+    let url = message.content;                                  //Variable that stores the message so that the url can be used to play music.
     let msg = message.content.toUpperCase();                    // This variable takes the message, and turns it all into uppercase so it isn't case sensitive.
     let cont = message.content.slice(prefix.length).split(" "); // This variable slices off the prefix, then puts the rest in an array based off the spaces.
 
@@ -172,8 +176,8 @@ bot.on('message', message => {
                     .setAuthor(bot.user.username, bot.user.displayAvatarURL)
                     .setThumbnail(bot.user.displayAvatarURL)
                     .addField("Bot Name:", bot.user.username)
-                    .addField("Version:","1.2.1")
-                    .addField("Updated:","3.1.2019")
+                    .addField("Version:","1.3.0")
+                    .addField("Updated:","5.1.2019")
                     .addField("Created:","18.12.2018")
                     .addField("Author:","Niklas")
                     .addField("Github page:","https://github.com/harjunpnik/Discord-Bot");
@@ -223,6 +227,39 @@ bot.on('message', message => {
                 isReady = true;                         //sets isReady to True.
             });
         }).catch(err => console.log(err));              //consolelogs errors.
+    }
+    
+    //-------PURGE------------
+    //Purge function
+    async function purge() {
+        message.delete(); //deletes the sent command
+        const amount = parseInt(cont[1]); //Takes the amount from the message
+        //We want to check if the user has the right role to use this command.
+        if (!message.member.roles.find("name", botAdminRole)) { //This checks to see if they don't have the role.
+            message.channel.send('You do not have the premission to use this command.');    //Reminds user that they don't have premission for that.
+            return; 
+        }
+
+        // We want to check if the argument is a number
+        if (isNaN(amount)) {
+            message.channel.send('Please use a number as your argument. \nUsage: ' + prefix + 'purge <number>'); // Remind user how to use command.
+            return;
+        }
+
+        //Fetch the messages that are to be deleted
+        const fetched = await message.channel.fetchMessages({limit: amount + 1});
+        //console.log(fetched.size + ' messages found'); 
+
+        //Deletes the messages
+        message.channel.bulkDelete(fetched)
+            .catch(error => message.channel.send(`Error: ${error}`)); 
+    }
+    
+
+     //-------PURGE------------
+     if (msg.startsWith(prefix + 'PURGE')) { 
+        //Deletes a defined amount of messages from chat to clean the chat.
+        purge();
     }
     
     //--------ROLL------------
