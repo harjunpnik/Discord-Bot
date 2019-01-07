@@ -63,7 +63,7 @@ bot.on('message', message => {
                         .addField(prefix + "info","Shows information about the bot")
                         .addField(prefix + "ping","Bot replys Pong!")
                         .addField(prefix + "play \[link\]","Plays a youtube videos audio. \n Example: " + prefix + "play https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-                        .addField(prefix + "purge \[number\]","Deletes a given amount of messages from chat to clean the chat. \n Example: " + prefix + "purge 20")
+                        .addField(prefix + "purge \[number\]","Deletes a given amount between 1-100 messages from chat to clean the chat. \n Example: " + prefix + "purge 20")
                         .addField(prefix + "roll","Rolls a number between 1 and 100.")
                         .addField(prefix + "stop","Stops the audio from playing")
                         .addField(prefix + "8ball \[Question\]","Ask the magical 8ball a question and your question shall be answered. \n Example: " + prefix + "8ball Is the Earth flat?")
@@ -177,8 +177,8 @@ bot.on('message', message => {
                     .setAuthor(bot.user.username, bot.user.displayAvatarURL)
                     .setThumbnail(bot.user.displayAvatarURL)
                     .addField("Bot Name:", bot.user.username)
-                    .addField("Version:","1.3.1")
-                    .addField("Updated:","5.1.2019")
+                    .addField("Version:","1.3.2")
+                    .addField("Updated:","7.1.2019")
                     .addField("Created:","18.12.2018")
                     .addField("Author:","Niklas")
                     .addField("Github page:","https://github.com/harjunpnik/Discord-Bot");
@@ -234,7 +234,7 @@ bot.on('message', message => {
     //Purge function
     async function purge() {
         message.delete(); //deletes the sent command
-        const amount = parseInt(cont[1]); //Takes the amount from the message
+        var amount = parseInt(cont[1]); //Takes the amount from the message
         //We want to check if the user has the right role to use this command.
         if (!message.member.roles.find("name", botAdminRole)) { //This checks to see if they don't have the role.
         message.reply('You do not have the premission to use this command.');    //Reminds user that they don't have premission for that.
@@ -244,6 +244,12 @@ bot.on('message', message => {
         // We want to check if the argument is a number
         if (isNaN(amount)) {
             message.reply('Please use a number as your argument. \nUsage: ' + prefix + 'purge <number>'); // Remind user how to use command.
+            return;
+        }
+
+        // We want to check that the argument is between 0 and 100
+        if (amount > 100 || amount <= 0) {
+            message.reply('Please use a number between 1 - 100. \nUsage: ' + prefix + 'purge <number>'); // Remind user how to use command.
             return;
         }
 

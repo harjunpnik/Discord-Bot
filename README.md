@@ -66,7 +66,7 @@ The following list includes the commands that have been implemented.
 | -info         | Shows information about the bot                                      					| -info        										|
 | -ping         | Bot replys Pong!                                                     					| -ping      									    |
 | -play         | Plays a youtube videos audio                                         					| -play https://www.youtube.com/watch?v=dQw4w9WgXcQ |
-| -purge        | Deletes a given amount of messages from chat to clean the chat                        | -purge 20											|
+| -purge        | Deletes a given amount between 1-100 messages from chat to clean the chat             | -purge 20											|
 | -roll         | Rolls a number between 1 and 100                                     					| -roll          									|
 | -stop         | Stops the audio from playing                                         					| -stop          									|
 | -8ball        | Ask the magical 8ball a question and your question shall be answered 					| -8ball Am I awesome?								|
