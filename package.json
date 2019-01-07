@@ -3,9 +3,16 @@
   "version": "1.0.0",
   "description": "Simple DiscordBot",
   "main": "Index.js",
+  "directories": {
+    "test": "test"
+  },
   "dependencies": {
     "discord.js": "^11.4.2",
-    "opusscript": "^0.0.6"
+    "get-json": "^1.0.1",
+    "jquery": "^3.3.1",
+    "opusscript": "^0.0.6",
+    "xmlhttprequest": "^1.8.0",
+    "ytdl": "^0.11.0"
   },
   "devDependencies": {},
   "scripts": {
