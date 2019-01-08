@@ -19,7 +19,7 @@ const bot = new Discord.Client();
 
 //Variable for checking if the bot is ready to play music and youtube que
 var isReady = true;
-const youtubeQue = [];
+var youtubeQue = [];
 
 
 //Bot does this on start-up.
@@ -178,7 +178,7 @@ bot.on('message', message => {
                     .setAuthor(bot.user.username, bot.user.displayAvatarURL)
                     .setThumbnail(bot.user.displayAvatarURL)
                     .addField("Bot Name:", bot.user.username)
-                    .addField("Version:","1.4.0")
+                    .addField("Version:","1.4.1")
                     .addField("Updated:","8.1.2019")
                     .addField("Created:","18.12.2018")
                     .addField("Author:","Niklas")
@@ -301,6 +301,7 @@ bot.on('message', message => {
             const dispatcher = connection.playFile('');
             dispatcher.on("end", end => {
                 voiceChannel.leave();
+                youtubeQue = [];        //Clears the youtube que
                 isReady = true;
             });
         }).catch(err => console.log(err));

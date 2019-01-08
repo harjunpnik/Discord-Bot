@@ -21,7 +21,7 @@ const botToken = '<Your Token goes here>'; //Enter your own Bot Token here
 ```
 By default, the bot has low privileges and needs to given extra privileges for certain commands to work properly. 
 
-To use the Gif command requires a giphy api key which can be requested from
+To use the Gif command, a giphy api key is required. The api key can be requested from
 [here](https://giphy.api-docs.io/1.0/welcome/access-and-api-keys  "https://giphy.api-docs.io/1.0/welcome/access-and-api-keys"). Replace the next line with your own api key.
 
 ```javascript
@@ -51,7 +51,7 @@ The bot will run until its command window is shut down, "ctrl + C" is pressed or
 
 ## Bot Commands
 
-The easiest way to find all the commands is tu use the ```-help``` command. This command prints out all the commands the bot is capable of.
+The easiest way to find all the commands is to use the ```-help``` command. This command prints out all the commands the bot is capable of.
 
 The following list includes the commands that have been implemented.
 
@@ -60,7 +60,7 @@ The following list includes the commands that have been implemented.
 | -cat          | Posts a random cat picture from [random.cat](http://random.cat  "http://random.cat")	| -cat           									|
 | -fail         | Plays a fail trumpet sound                                           					| -fail          									|
 | -gif          | Searches for the first result on the site Giphy                                		| -gif funny cat 									|
-| -gifr         | Searches for a random gif on the site Giphy                                			| -gif batman	 									|			
+| -gifr         | Searches for a random gif on the site Giphy                                			| -gifr batman	 									|			
 | -genre        | Recommends a random music genre to listen to                         					| -genre         									|
 | -help         | Shows all the commands                                               					| -help         						 			|
 | -info         | Shows information about the bot                                      					| -info        										|
