@@ -17,8 +17,9 @@ const prefix = '-';
 //Sets your client, named to : bot.
 const bot = new Discord.Client();
 
-//Variable for checking if the bot is ready to play music.
+//Variable for checking if the bot is ready to play music and youtube que
 var isReady = true;
+const youtubeQue = [];
 
 
 //Bot does this on start-up.
@@ -177,8 +178,8 @@ bot.on('message', message => {
                     .setAuthor(bot.user.username, bot.user.displayAvatarURL)
                     .setThumbnail(bot.user.displayAvatarURL)
                     .addField("Bot Name:", bot.user.username)
-                    .addField("Version:","1.3.2")
-                    .addField("Updated:","7.1.2019")
+                    .addField("Version:","1.4.0")
+                    .addField("Updated:","8.1.2019")
                     .addField("Created:","18.12.2018")
                     .addField("Author:","Niklas")
                     .addField("Github page:","https://github.com/harjunpnik/Discord-Bot");
@@ -207,8 +208,24 @@ bot.on('message', message => {
     }
 
     //--------PLAY------------
-    //This command will activate if bot isReady to play music
-    if (isReady && msg.startsWith(prefix + 'PLAY')) {
+    function play (connection){
+        const dispatcher = connection.playStream(YTDL(youtubeQue[0], {filter: "audioonly"}));   //Plays sound from youtube video
+        message.channel.send("Playing: " + youtubeQue[0] );                                     //Sends message to channel informing what is playing
+        youtubeQue.shift();
+        
+        dispatcher.on("end", end => {               //When Music and there are still songs in que,
+                if(youtubeQue[0]){                  //execute play again
+                    play(connection);
+                }else{
+                    voiceChannel.leave();                   //Leaves the voice channel
+                    isReady = true;                         //sets isReady to True.
+                }                   
+        });
+    }
+
+    //--------PLAY------------
+    //This command will play music in a voicechat
+    if ( msg.startsWith(prefix + 'PLAY')) {
         //Bot joins a channel to play the youtube url sound.
         
         //This checks if the sender of the message is not a chat.
@@ -216,18 +233,18 @@ bot.on('message', message => {
             message.reply('You need to be in a chat.');  //Remind user that they need to be in a voicechat to use this command.
             return;
         }
-        message.channel.send("Playing");
-        var video;                                      //Creates variable video.
-        video = url.substring(5, msg.length+1);         //Cuts the message so that the url is left.
-        isReady = false;                                //Sets bots variable to false so that no other music commmand can be played at the same time. 
-        var voiceChannel = message.member.voiceChannel; //Saves what voice channel to join.
-        voiceChannel.join().then(connection =>{         //Joins voice channel and then:
-            const dispatcher = connection.playStream(YTDL(video, {filter: "audioonly"}));   //Plays sound from youtube video.
-            dispatcher.on("end", end => {               //When Music ends it executes following:
-                voiceChannel.leave();                   //Leaves the voice channel and
-                isReady = true;                         //sets isReady to True.
-            });
-        }).catch(err => console.log(err));              //consolelogs errors.
+        
+        var video;                                          //Creates variable video.
+        video = url.substring(5, msg.length+1);             //Cuts the message so that the url is left.
+        youtubeQue.push(video);                             //adds song to que
+        //console.log(youtubeQue);
+        if (isReady){
+            isReady = false;                                //Sets bots variable to false so that no other music commmand can be played at the same time. 
+            var voiceChannel = message.member.voiceChannel; //Saves what voice channel to join.
+            voiceChannel.join().then(connection =>{         //Joins voice channel and executes play function
+                play(connection);
+            }).catch(err => console.log(err));              //consolelogs errors.
+        }    
     }
     
     //-------PURGE------------

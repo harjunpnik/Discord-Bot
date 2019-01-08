@@ -73,7 +73,7 @@ The following list includes the commands that have been implemented.
 
 ## Possible updates
 Some possible updates or commands to be implemented:
-* Que system for the Youtube-playback
+* ~~Que system for the Youtube-playback~~ [Done]
 * Skip song command
   * Vote skip 
   * Instant skip with certain server roles 
