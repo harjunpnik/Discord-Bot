@@ -66,6 +66,7 @@ bot.on('message', message => {
                         .addField(prefix + "play \[link\]","Plays a youtube videos audio. \n Example: " + prefix + "play https://www.youtube.com/watch?v=dQw4w9WgXcQ")
                         .addField(prefix + "purge \[number\]","Deletes a given amount between 1-100 messages from chat to clean the chat. \n Example: " + prefix + "purge 20")
                         .addField(prefix + "roll","Rolls a number between 1 and 100.")
+                        .addField(prefix + "skip","Skips the current song from playing")
                         .addField(prefix + "stop","Stops the audio from playing")
                         .addField(prefix + "8ball \[Question\]","Ask the magical 8ball a question and your question shall be answered. \n Example: " + prefix + "8ball Is the Earth flat?")
                         .addField("For more information and updates:","https://github.com/harjunpnik/Discord-Bot")
@@ -124,7 +125,7 @@ bot.on('message', message => {
                     searchTerm += contents[i+1];
                 }
             }
-
+            http://api.giphy.com/v1/gifs/search?q=batman+funny+cat?&api_key=dc6zaTOxFJmzC
             var apiUrl = api + searchTerm + fullApiKey;         //Giphy api url is combined here
           
             searchReply = "Search did not work";
@@ -140,7 +141,7 @@ bot.on('message', message => {
                     searchReply = response.data[0].url;         //Sends url from first result
                 }              
                 
-                message.channel.send(searchReply);          //sends url to chat
+                message.channel.send(searchReply);          //Sends url to chat
             });
         
         }  
@@ -178,8 +179,8 @@ bot.on('message', message => {
                     .setAuthor(bot.user.username, bot.user.displayAvatarURL)
                     .setThumbnail(bot.user.displayAvatarURL)
                     .addField("Bot Name:", bot.user.username)
-                    .addField("Version:","1.4.1")
-                    .addField("Updated:","8.1.2019")
+                    .addField("Version:","1.5.0")
+                    .addField("Updated:","9.1.2019")
                     .addField("Created:","18.12.2018")
                     .addField("Author:","Niklas")
                     .addField("Github page:","https://github.com/harjunpnik/Discord-Bot");
@@ -291,6 +292,23 @@ bot.on('message', message => {
         message.reply(Math.floor((Math.random() * 100) + 1));
     }
     
+    //--------SKIP------------
+    if (msg === prefix + 'SKIP'){
+        //This checks if the sender of the message is not a chat.
+        if(!message.member.voiceChannel){
+            message.reply('You need to be in a chat.');   //Remind user that they need to be in a voicechat to use this command.
+            return;
+        }
+        if(isReady){
+            message.reply('There is nothing to skip');   //Remind user that they cannot skip 
+            return;
+        }
+        //console.log(youtubeQue);
+        var voiceChannel = message.member.voiceChannel;   //Saves what voice channel
+        voiceChannel.connection.dispatcher.end();         //Ends the currently playing song
+
+    }
+
     //--------STOP------------
     if (!isReady && msg === prefix + 'STOP') {
         //Makes bot stop the music.

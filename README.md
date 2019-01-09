@@ -68,15 +68,16 @@ The following list includes the commands that have been implemented.
 | -play         | Plays a youtube videos audio                                         					| -play https://www.youtube.com/watch?v=dQw4w9WgXcQ |
 | -purge        | Deletes a given amount between 1-100 messages from chat to clean the chat             | -purge 20											|
 | -roll         | Rolls a number between 1 and 100                                     					| -roll          									|
-| -stop         | Stops the audio from playing                                         					| -stop          									|
+| -skip         | Skips the current song from playing						                            | -skip          									|
+| -stop         | Stops the audio from playing and clears the youtube que                               | -stop          									|
 | -8ball        | Ask the magical 8ball a question and your question shall be answered 					| -8ball Am I awesome?								|
 
 ## Possible updates
 Some possible updates or commands to be implemented:
 * ~~Que system for the Youtube-playback~~ [Done]
-* Skip song command
-  * Vote skip 
-  * Instant skip with certain server roles 
+* ~~Skip song command~~ [Done]
+  * ~~Vote skip~~[Scrapped]
+  * ~~Instant skip with certain server roles~~[Scrapped]
 * ~~Giphy-api implementation~~ [Done]
   * ~~Random gif and first result gif~~ [Done]
 * ~~Purge functionality (Deletes messages)~~ [Done]
