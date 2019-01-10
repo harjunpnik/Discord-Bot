@@ -74,12 +74,17 @@ bot.on('message', message => {
     
             message.channel.send({embed});
     }
-    
+
     //--------CAT-------------
     if (msg === prefix + 'CAT') {
-        //Posts a random cat picture from random.cat.                   //This number has to be changed by hand until a solution is done
-        var picNumber = Math.floor((Math.random() * 1678));             //Generates a random number based on how many cat pictures (0-1677) -> Math.random() * 1678). 
-        message.channel.send('http://random.cat/view?i='+ picNumber);   //Sends message with the url + picture number that generates the full url.
+        //Posts a random cat picture from random.cat.
+        var catApiUrl = "http://aws.random.cat/meow"             
+
+        getJSON(catApiUrl, function(error, response){      //Get JSON data from url
+            //console.log(error);
+            //console.log(response);
+            message.channel.send(response.file);            //Sends url to chat
+        });
     }
 
     //--------FAIL------------
@@ -179,8 +184,8 @@ bot.on('message', message => {
                     .setAuthor(bot.user.username, bot.user.displayAvatarURL)
                     .setThumbnail(bot.user.displayAvatarURL)
                     .addField("Bot Name:", bot.user.username)
-                    .addField("Version:","1.5.0")
-                    .addField("Updated:","9.1.2019")
+                    .addField("Version:","1.5.1")
+                    .addField("Updated:","10.1.2019")
                     .addField("Created:","18.12.2018")
                     .addField("Author:","Niklas")
                     .addField("Github page:","https://github.com/harjunpnik/Discord-Bot");
