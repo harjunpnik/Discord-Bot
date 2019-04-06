@@ -58,15 +58,18 @@ The following list includes the commands that have been implemented.
 | Command       | Description                                                          					| Example        									|
 | ------------- |:-------------------------------------------------------------------------------------:|---------------------------------------------------|
 | -cat          | Posts a random cat picture from [random.cat](http://random.cat  "http://random.cat")	| -cat           									|
+| -csgo         | Starts a csgo lobby																	| -cgso           									|
 | -fail         | Plays a fail trumpet sound                                           					| -fail          									|
 | -gif          | Searches for the first result on the site Giphy                                		| -gif funny cat 									|
 | -gifr         | Searches for a random gif on the site Giphy                                			| -gifr batman	 									|			
 | -genre        | Recommends a random music genre to listen to                         					| -genre         									|
 | -help         | Shows all the commands                                               					| -help         						 			|
 | -info         | Shows information about the bot                                      					| -info        										|
+| -join         | Lets player join the CS GO lobby                                     					| -join        										|
 | -ping         | Bot replys Pong!                                                     					| -ping      									    |
 | -play         | Plays a youtube videos audio                                         					| -play https://www.youtube.com/watch?v=dQw4w9WgXcQ |
 | -purge        | Deletes a given amount between 1-100 messages from chat to clean the chat             | -purge 20											|
+| -resetlobby   | Resets the CS GO lobby                                      							| -resetlobby 										|
 | -roll         | Rolls a number between 1 and 100                                     					| -roll          									|
 | -skip         | Skips the current song from playing						                            | -skip          									|
 | -stop         | Stops the audio from playing and clears the youtube que                               | -stop          									|

@@ -65,7 +65,7 @@ bot.on('message', message => {
                         .addField(prefix + "genre","Recommends a random music genre to listen to.")
                         .addField(prefix + "help","Shows all the commands.")
                         .addField(prefix + "info","Shows information about the bot")
-                        .addField(prefix + "join","Let's player join the CS GO lobby")
+                        .addField(prefix + "join","Lets player join the CS GO lobby")
                         .addField(prefix + "ping","Bot replys Pong!")
                         .addField(prefix + "play \[link\]","Plays a youtube videos audio. \n Example: " + prefix + "play https://www.youtube.com/watch?v=dQw4w9WgXcQ")
                         .addField(prefix + "purge \[number\]","Deletes a given amount between 1-100 messages from chat to clean the chat. \n Example: " + prefix + "purge 20")
