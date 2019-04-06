@@ -1,15 +1,14 @@
 //Loads libraries: discord.js, youtube download core and getJSON
 const Discord = require('discord.js');
 const YTDL = require('ytdl-core');
-const getJSON = require('get-json')
-
+const getJSON = require('get-json');
 
 //API-Keys and Bot Token
-const botToken = '<Your Token goes here>'; //Enter your own Bot Token here
-const giphyApiKey = '<Your API-Key goes here>';//Enter your own giphy-api key here
+const botToken = process.env.Bot_Token; //Enter your own Bot Token here
+const giphyApiKey =  process.env.Giphy_Api_Key;//Enter your own giphy-api key here
 
 //Bot admin role from the server 
-const botAdminRole = '<Your Discord bot admin role goes here>';
+const botAdminRole = process.env.Bot_Admin_Role;
 
 //Prefix to messages so the bot will understand to execute the code.
 const prefix = '-';
@@ -21,6 +20,9 @@ const bot = new Discord.Client();
 var isReady = true;
 var youtubeQue = [];
 
+//Variables for csgo lobby system
+var lobbyPlayers = [];
+var lobbyActive = false;
 
 //Bot does this on start-up.
 bot.on('ready', () => {
@@ -56,15 +58,18 @@ bot.on('message', message => {
                         .setThumbnail(bot.user.displayAvatarURL)
                         .setTitle("COMMANDS:")
                         .addField(prefix + "cat","Posts a random cat picture from random.cat.")
+                        .addField(prefix + "csgo","Starts a csgo lobby.")
                         .addField(prefix + "fail","Plays a fail trumpet sound.")
                         .addField(prefix + "gif \[search terms\]","Searches for the first result on the site Giphy. \n Example: " + prefix + "gif funny cat")
                         .addField(prefix + "gifr \[search terms\]","Searches for a random gif on the site Giphy. \n Example: " + prefix + "gifr batman")
                         .addField(prefix + "genre","Recommends a random music genre to listen to.")
                         .addField(prefix + "help","Shows all the commands.")
                         .addField(prefix + "info","Shows information about the bot")
+                        .addField(prefix + "join","Let's player join the CS GO lobby")
                         .addField(prefix + "ping","Bot replys Pong!")
                         .addField(prefix + "play \[link\]","Plays a youtube videos audio. \n Example: " + prefix + "play https://www.youtube.com/watch?v=dQw4w9WgXcQ")
                         .addField(prefix + "purge \[number\]","Deletes a given amount between 1-100 messages from chat to clean the chat. \n Example: " + prefix + "purge 20")
+                        .addField(prefix + "resetlobby","Resets the CS GO lobby.")
                         .addField(prefix + "roll","Rolls a number between 1 and 100.")
                         .addField(prefix + "skip","Skips the current song from playing")
                         .addField(prefix + "stop","Stops the audio from playing")
@@ -184,8 +189,8 @@ bot.on('message', message => {
                     .setAuthor(bot.user.username, bot.user.displayAvatarURL)
                     .setThumbnail(bot.user.displayAvatarURL)
                     .addField("Bot Name:", bot.user.username)
-                    .addField("Version:","1.5.1")
-                    .addField("Updated:","10.1.2019")
+                    .addField("Version:","1.6.0")
+                    .addField("Updated:","6.4.2019")
                     .addField("Created:","18.12.2018")
                     .addField("Author:","Niklas")
                     .addField("Github page:","https://github.com/harjunpnik/Discord-Bot");
@@ -329,8 +334,79 @@ bot.on('message', message => {
             });
         }).catch(err => console.log(err));
     }
-    
+
+    //Function for csgo lobby
+    function csgoLobbyStatus(){
+        const embed = new Discord.RichEmbed()
+        .setTitle("CS GO LOBBY:")
+        .addField("Player 1", lobbyPlayers[0])
+        .addField("Player 2", lobbyPlayers[1])
+        .addField("Player 3", lobbyPlayers[2])
+        .addField("Player 4", lobbyPlayers[3])
+        .addField("Player 5", lobbyPlayers[4])
+        
+        message.channel.send({embed});
+    }
+
+    //--------CSGO------------
+    if (msg === prefix + 'CSGO'){
+        // Test for cs go lobby join
+        if(!lobbyActive){
+            var playerNumber = lobbyPlayers.length +1;
+            //message.channel.send("<@&560883579786100746> Player " + playerNumber + " - " + message.author.username + " joined the lobby");
+            lobbyPlayers.push(message.author.username);
+        }
+
+        csgoLobbyStatus();
+
+        lobbyActive = true;
+    }
+
+    //--------JOIN CSGO------------
+    if (msg === prefix + 'JOIN'){
+        // Test for cs go lobby join
+
+        //Checks if player is already in the lobby
+        if(!lobbyActive){
+            message.channel.send("No lobby is active. You can create a lobby by writing " + prefix + "csgo to create a lobby.");
+
+        }else if(lobbyPlayers.indexOf(message.author.username) != -1){
+            message.channel.send("You are already in the lobby");
+            
+        }else if(lobbyPlayers.length == 4){
+            var playerNumber = lobbyPlayers.length +1;
+            message.channel.send("Player " + playerNumber + " - " + message.author.username + " joined the lobby");
+            lobbyPlayers.push(message.author.username);
+
+            message.channel.send("Lobby Closed");
+
+            csgoLobbyStatus();
+            
+            lobbyActive = false;
+            lobbyPlayers = [];
+            
+
+        }else if(lobbyPlayers.length < 5){
+            var playerNumber = lobbyPlayers.length +1;
+            message.channel.send("Player " + playerNumber + " - " + message.author.username + " joined the lobby");
+            lobbyPlayers.push(message.author.username);
+            
+        }
+
+    }
+
+    //--------CSGO LOBBY CLEAR------------
+    if (msg === prefix + 'RESETLOBBY'){
+        lobbyPlayers = [];
+        lobbyActive = false;
+        message.channel.send("Lobby has been cleared. Write " + prefix + "csgo to start a lobby");
+    }
+
 });
+
+
+
+
 
 //Your bot token for the bot so that it can connect to the server.
 bot.login(botToken);
