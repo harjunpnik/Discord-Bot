@@ -353,7 +353,7 @@ bot.on('message', message => {
         // Test for cs go lobby join
         if(!lobbyActive){
             var playerNumber = lobbyPlayers.length +1;
-            //message.channel.send("<@&560883579786100746> Player " + playerNumber + " - " + message.author.username + " joined the lobby");
+            message.channel.send("<@&560883579786100746> Player " + playerNumber + " - " + message.author.username + " joined the lobby");
             lobbyPlayers.push(message.author.username);
         }
 
